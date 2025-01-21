@@ -3,6 +3,18 @@
 {% block title %}Spiel zur persönlichen Bibliothek hinzufügen{% endblock %}
 
 {% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div id="flashMsgDiv" class=flashMsgDiv-{{category}} role="alert">
+                <p>{{ message }}</p>
+                <button type="button" class="closeBtn">OK</button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
 <div class="addGameContainer">
     <h1 class="title">Persönliches Spiel hochladen</h1>
     <form id="Form" method="post" enctype="multipart/form-data" action="{{ url_for('persönliches_spiel_hinzufügen') }}">
