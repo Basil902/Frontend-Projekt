@@ -89,12 +89,14 @@ def persönliches_spiel_hinzufügen():
 
             conn = get_db()
             cur = conn.cursor()
-            cur.execute('INSERT INTO games (name, cover, preis, imBesitz) VALUES (?, ?, ?, ?)',
-                        (game_name, cover_blob, 0, 0))
+            cur.execute('INSERT INTO games (name, cover, preis, imBesitz, uploaded_by_user) VALUES (?, ?, ?, ?, ?)',
+                        (game_name, cover_blob, 0, 1, 1))
             game_id = cur.lastrowid
-            cur.execute('INSERT INTO user_bibliothek (user_id, game_id) VALUES (?, ?)',
-                        (current_user.id, game_id))
+            cur.execute('INSERT INTO user_bibliothek (user_id, game_id, name, cover) VALUES (?, ?, ?, ?)',
+                        (current_user.id, game_id, game_name, cover_blob))
             conn.commit()
+            cur.execute("SELECT name FROM games WHERE name = ? ", (game_name,))
+            gamename = cur.fetchone()
             flash('Spiel erfolgreich zur persönlichen Bibliothek hinzugefügt!', 'success')
         else:
             flash('Ein Cover ist erforderlich!', 'danger')
@@ -123,7 +125,9 @@ def game_löschen(game_id):
     if game:
         # Das Spiel aus der Benutzerbibliothek löschen
         cur.execute("DELETE FROM user_bibliothek WHERE user_id = ? AND game_id = ?", (current_user.id, game_id))
-        cur.execute("UPDATE games SET imBesitz = 0 WHERE id = ?", (game_id,))
+        # persönlich hochgeladene Spiele aus der Datenbank löschen
+        cur.execute("DELETE FROM games WHERE id = ? AND uploaded_by_user = 1", (game_id,))
+        cur.execute("UPDATE games SET imBesitz = 0 WHERE id = ? and uploaded_by_user IS NOT 1", (game_id,))
         conn.commit()
         flash(f' Spiel: {game["name"]} wurde gelöscht', 'success')
     else:
