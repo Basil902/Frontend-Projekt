@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/auth.css">
+    <title>Registrieren</title>
+</head>
+<body>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div id="flashMsgDiv" class=flashMsgDiv-{{category}} role="alert">
+                        <p>{{ message }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <h2>Register</h2>
+        <form id="Form" method="POST" action="{{ url_for('register') }}">
+            {{ form.hidden_tag() }}
+            <div class="formInput">
+                {{ form.username.label }}
+                {{ form.username(class="inputField") }}
+            </div>
+            <div class="formInput">
+                {{ form.email.label }}
+                {{ form.email(class="inputField") }}
+            </div>
+            <div class="formInput">
+                {{ form.password.label }}
+                {{ form.password(class="inputField", id="password1") }}
+            </div>
+            <div class="formInput">
+                {{ form.confirm_password.label }}
+                {{ form.confirm_password(class="inputField", id="password2") }}
+            </div>
+            <div class="formSubmitBtn">
+                <button id="submitBtn" type="submit">Register</button>
+            </div>
+        </form>
+    </div>
+    <script src="../static/js/auth.js"></script>
+</body>
+</html>           
+        

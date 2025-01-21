@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Shop{% endblock %}
+
+{% block content %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div id="flashMsgDiv" class=flashMsgDiv-{{category}} role="alert">
+                    <p>{{ message }}</p>
+                    <button type="button" class="closeBtn">OK</button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+<div class="titleContainer">
+    <h1>Bibliothek</h1>
+    <form method="get" action="{{ url_for('games_suchen_bibliothek') }}">
+        <input type="text" class="searchBox" name="query" placeholder="Suche in deiner Bibliothek..." value="{{ search_query }}">
+        <button type="submit" id="submitBtn">Suchen</button>
+    </form>
+</div>
+
+{% if search_results %}
+<div class="row">
+    <div class="games">
+        {% for game in search_results %}
+            <div class="gameEl">
+                <img src="{{ url_for('cover', game_id=game['game_id']) }}" alt="{{ game['name'] }}">
+                <h2>{{ game['name'] }}</h2>
+                <form action="{{ url_for('game_löschen', game_id=game['game_id']) }}" method="post">
+                    <button type="submit" class="spielEntfernenEl">Spiel entfernen</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% else %}
+<div class="userFeedbackMsg">
+    <h1>Das angegebene Spiel befindet sich nicht in deiner Bibliothek.</h1>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Shop{% endblock %}
+
+{% block content %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div id="flashMsgDiv" class=flashMsgDiv-{{category}} role="alert">
+                    <p>{{ message }}</p>
+                    <button type="button" class="closeBtn">OK</button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+<div class="titleContainer">
+    <h1>Shop</h1>
+    <form method="get" action="{{ url_for('games_suchen_shop') }}">
+        <input type="text" class="searchBox" name="query" placeholder="Suche im Shop" value="{{ search_query }}">
+        <button type="submit" id="submitBtn">Suchen</button>
+    </form>
+</div>
+
+{% if search_results %}
+<div class="row">
+    <div class="games">
+        {% for game in search_results %}
+            <div class="gameEl">
+                <img src="{{ url_for('cover', game_id=game['id']) }}" alt="{{ game['name'] }}">
+                <h2>{{ game['name'] }}</h2>
+                <p>Preis: {{ game['preis'] }}€</p>
+                <a href="{{ url_for('spiel_hinzufügen', game_id=game['id']) }}" class="buttons">Kaufen</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% else %}
+<div class="userFeedbackMsg">
+    <h1>Das angegebene Spiel wurde nicht gefunden.</h1>
+</div>
+    
+{% endif %}
+{% endblock %}

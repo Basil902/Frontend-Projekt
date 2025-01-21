@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Spiel zur persönlichen Bibliothek hinzufügen{% endblock %}
+
+{% block content %}
+<div class="addGameContainer">
+    <h1 class="title">Persönliches Spiel hochladen</h1>
+    <form id="Form" method="post" enctype="multipart/form-data" action="{{ url_for('persönliches_spiel_hinzufügen') }}">
+        {{ form.hidden_tag() }}
+        <div class="formInput">
+            {{ form.name.label() }}
+            {{ form.name(class="inputField") }}
+        </div>
+        <div class="formInput">
+            {{ form.cover.label(class="uploadFileLabel") }}<br>
+            {{ form.cover(id="uploadBtn") }} <br><br>
+        </div>
+        <div class="formSubmitBtn">
+            <button type="submit" id="submitBtn">Spiel hochladen</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
