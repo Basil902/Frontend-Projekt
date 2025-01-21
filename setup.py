@@ -2,7 +2,7 @@ import sqlite3
 import os
 
 def get_db():
-    conn = sqlite3.connect('Webseite.db')
+    conn = sqlite3.connect('database/Webseite.db')
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -10,7 +10,7 @@ def initialize_db():
 
     try:
 
-        db_path = 'Webseite.db'
+        db_path = 'database/Webseite.db'
         first_run = not os.path.exists(db_path)
 
         conn = get_db()
@@ -31,7 +31,8 @@ def initialize_db():
                 name TEXT NOT NULL,
                 cover BLOB NOT NULL,
                 preis REAL NOT NULL,
-                imBesitz BOOL NOT NULL DEFAULT 0
+                imBesitz BOOL NOT NULL DEFAULT 0,
+                uploaded_by_user BOOL DEFAULT 0
             )
         ''')
 
@@ -77,21 +78,21 @@ def add_initial_games(conn):
         cover_bild4 = f.read()
 
     # Überprüfen, ob die Tabelle bereits Daten enthält
-    cur.execute("SELECT COUNT(*) FROM shop_games")
+    cur.execute("SELECT COUNT(*) FROM games")
     count = cur.fetchone()[0]
 
     if count == 0:
         # Bilder in die Datenbank einfügen
-        cur.execute("INSERT INTO shop_games (name, cover, preis) VALUES (?, ?, ?)",
+        cur.execute("INSERT INTO games (name, cover, preis) VALUES (?, ?, ?)",
                     ('Final Fantasy 10', cover_bild1, 29.99))
 
-        cur.execute("INSERT INTO shop_games (name, cover, preis) VALUES (?, ?, ?)",
+        cur.execute("INSERT INTO games (name, cover, preis) VALUES (?, ?, ?)",
                     ('Pokemon Saphire', cover_bild2, 89.99))
 
-        cur.execute("INSERT INTO shop_games (name, cover, preis) VALUES (?, ?, ?)",
+        cur.execute("INSERT INTO games (name, cover, preis) VALUES (?, ?, ?)",
                     ('Elden Ring', cover_bild3, 69.99))
 
-        cur.execute("INSERT INTO shop_games (name, cover, preis) VALUES (?, ?, ?)",
+        cur.execute("INSERT INTO games (name, cover, preis) VALUES (?, ?, ?)",
                     ('Pokemon Rubin', cover_bild4, 89.99))
 
         conn.commit()
