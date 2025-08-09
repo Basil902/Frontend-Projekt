@@ -11,7 +11,7 @@ from user import Userregistrierung, Userlogin
 def home():
     if current_user.is_authenticated:
         return redirect(url_for('startseite'))
-    return render_template('login.html')  # Allgemeine Startseite für nicht eingeloggte Benutzer
+    return Userlogin()  # Allgemeine Startseite für nicht eingeloggte Benutzer
 
 #Zeigt die Spiele an die man besitzt auf seiner Startseite
 def startseite():

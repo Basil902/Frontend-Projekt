@@ -1,5 +1,5 @@
 import os
-from flask import Flask, redirect, url_for, request, render_template
+from flask import Flask, redirect, url_for, request, render_template, current_app
 from flask_login import LoginManager, login_required, current_user
 from flask_bootstrap import Bootstrap
 from setup import initialize_db
@@ -14,7 +14,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 bootstrap = Bootstrap(app)
 
-api = Api(app, version='1.0', title='Spielbibliothek API', description='Spielbibliothek API', doc='/api/')
+api = Api(app, version='1.0', title='Spielbibliothek API', description='Spielbibliothek API', doc='/api', prefix='/api')
 
 # Authentication Namespace
 auth_ns = Namespace('auth', description='Authentication operations')
@@ -33,11 +33,7 @@ def login():
     return Userlogin()
 
 @app.route('/')
-def start():
-    return redirect(url_for('home'))
-
-@app.route('/home')
-def home():
+def index():
     return steuerung.home()
 
 @app.route('/startseite')
