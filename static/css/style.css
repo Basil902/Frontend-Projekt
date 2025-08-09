@@ -18,6 +18,7 @@
     text-decoration: none;
     border: none;
     cursor: pointer;
+    transition: background-color 0.25s ease
 }
 
 .inputField {
@@ -85,14 +86,12 @@
     color: black;
     margin-left: auto;
     margin-top: 18px;
-    /* border: 1px solid white; */
 }
 
 .navbarLinks a {
     display: inline-block;
     color: black;
     text-decoration: none;
-    /* padding bot 14.5px damit beim Hovern der weiße Rand ganz unten erscheint */
     padding-bottom: 14.5px;
     margin-right: 25px;
     transition: transform 0.1s, font-size 0.1s;
@@ -117,21 +116,25 @@
 }
 
 #bibliothekDivTitle {
-
     padding-top: 10px;
 }
 
-.searchBox {
+.searchBar input {
     width: 500px;
-    padding: 6px 12px;
+    padding: 10px 13px;
     margin-bottom: 20px;
     margin-right: 10px;
+    border-radius: 10px;
+    font-weight: bold;
     border: none;
+    color: white;
+    background-color: #2A2A3A;
 }
 
-.searchBox:focus {
-    outline: none;
+.searchBar input:focus {
+    outline: 2px solid #0d9273;
 }
+
 
 img {
     height: 250px;
@@ -147,6 +150,8 @@ img {
 .games {
     display: flex;
     text-align: center;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     width: 90%;
     margin-left: 50px;
