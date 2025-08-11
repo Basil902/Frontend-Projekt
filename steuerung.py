@@ -82,6 +82,7 @@ def persönliches_spiel_hinzufügen():
         if cover:
             filename = secure_filename(cover.filename)
             cover_path = os.path.join('static', 'uploads', filename)
+            # falls die Codezeile ein Fehler auslöst, überprüfe ob das Verzeichnis "uploads" existiert
             cover.save(cover_path)
 
             with open(cover_path, 'rb') as f:
