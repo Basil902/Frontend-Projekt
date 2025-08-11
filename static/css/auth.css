@@ -64,6 +64,11 @@ body {
     background-color: #0d9273;
 }
 
+.switch-form-link a{
+    color: #1BFECE;
+    /* text-decoration: none; */
+}
+
 .formCheckbox {
     margin-top: 10px;
     margin-left: -4px;

@@ -35,6 +35,10 @@
             <div class="formSubmitBtn">
                 {{ form.submit(id="submitBtn") }}
             </div>
+
+            <div class="switch-form-link">
+                <p>Noch kein Konto? <a href=" {{ url_for('register') }} ">Registrieren</a></p>
+            </div>
         </form>
     </div>
     <script src="../static/js/auth.js"></script>
