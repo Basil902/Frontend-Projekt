@@ -17,8 +17,8 @@
 
 <div class="titleContainer">
     <h1>Shop</h1>
-    <form method="get" action="{{ url_for('games_suchen_shop') }}">
-        <input type="text" class="searchBox" name="query" placeholder="Suche im Shop" value="{{ search_query }}">
+    <form method="get" action="{{ url_for('games_suchen_shop') }} " class="searchBar">
+        <input type="text" name="query" placeholder="Suche im Shop" value="{{ search_query }}">
         <button type="submit" id="submitBtn">Suchen</button>
     </form>
 </div>
